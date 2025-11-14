@@ -1,0 +1,144 @@
+.create-item-container {
+    max-width: 550px;
+    margin: 40px auto;
+    padding: 40px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    box-shadow: 0 0 40px rgba(0,0,0,0.3);
+    animation: fadeIn 0.5s ease;
+}
+
+.create-item-container h1 {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 25px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.item-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.item-form input,
+.item-form textarea,
+.item-form select {
+    padding: 14px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 12px;
+    color: white;
+    outline: none;
+    font-size: 15px;
+    transition: 0.2s;
+}
+
+.item-form input:focus,
+.item-form textarea:focus,
+.item-form select:focus {
+    border-color: #a970ff;
+    background: rgba(255, 255, 255, 0.16);
+    box-shadow: 0 0 10px rgba(169,112,255,0.4);
+}
+
+.submit-btn {
+    margin-top: 10px;
+    background: linear-gradient(135deg,#8b5cf6,#a855f7);
+    color: white;
+    padding: 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    transition: 0.2s;
+}
+
+.submit-btn:hover {
+    background: linear-gradient(135deg,#7c3aed,#9333ea);
+    transform: translateY(-2px);
+}
+
+.board-select {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.new-board-btn {
+    padding: 10px 12px;
+    background: rgba(169,112,255,0.2);
+    color: white;
+    border-radius: 10px;
+    border: 1px solid rgba(169,112,255,0.4);
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.new-board-btn:hover {
+    background: rgba(169,112,255,0.35);
+}
+
+/* --- MODAL --- */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.65);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal {
+    background: rgba(30,30,30,0.95);
+    padding: 30px;
+    border-radius: 16px;
+    min-width: 320px;
+    color: white;
+    box-shadow: 0 0 25px rgba(0,0,0,0.6);
+}
+
+.modal input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.08);
+    color: white;
+    margin-bottom: 15px;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.modal-actions button {
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+    font-weight: 600;
+}
+
+.modal-actions .cancel {
+    background: #444;
+}
+
+.modal-actions button:not(.cancel) {
+    background: #a855f7;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.97); }
+    to   { opacity: 1; transform: scale(1); }
+}
