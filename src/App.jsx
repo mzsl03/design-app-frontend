@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import SideBar from "./components/SideBar";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./style.css";
@@ -7,6 +7,14 @@ import BoardSlide from "./components/BoardSlide.jsx";
 import CreateItem from "./components/CreateItem.jsx";
 
 function App() {
+
+    useEffect(() => {
+        document.body.style.overflow = "hidden";
+
+        return () => {
+            document.body.style.overflow = "auto";
+        };
+    }, []);
 
     let Component;
 
