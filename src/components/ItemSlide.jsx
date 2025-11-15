@@ -1,21 +1,90 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import { getItems } from "../api/items";
 
 const ItemSlide = () => {
     const [items, setItems] = useState([]);
 
+    const trackRef = useRef(null);
+
     useEffect(() => {
         getItems().then(res => setItems(res.data));
     }, []);
 
+    useEffect(() => {
+        const track = trackRef.current;
+        if (!track) return;
+
+        const handleMouseDown = (e) => {
+            track.dataset.mouseDownAt = e.clientY;
+        };
+
+        const handleMouseUp = () => {
+            track.dataset.mouseDownAt = "0";
+            track.dataset.prevPercentage = track.dataset.percentage;
+        };
+
+        const handleMouseMove = (e) => {
+            if (track.dataset.mouseDownAt === "0") return;
+
+            const numberOfItems = track.getElementsByClassName("item").length;
+
+            const step = -80;
+
+            const mouseDelta = e.clientY - parseFloat(track.dataset.mouseDownAt);
+            const maxDelta = window.innerHeight / 2;
+
+            const percentage = (mouseDelta / maxDelta) * 100,
+                nextPercentage = parseFloat(track.dataset.prevPercentage) + percentage;
+
+            const minClamp = -(numberOfItems - 1) * step;
+
+            const clamped = Math.max(Math.min(nextPercentage, 0), minClamp);
+
+            track.dataset.percentage = clamped;
+
+            track.animate(
+                { transform: `translate(0, ${clamped}%)` },
+                { duration: 1200, fill: "forwards" }
+            );
+            for (const image of track.getElementsByClassName("image")) {
+                image.animate(
+                    { objectPosition: `0 ${-clamped}%` },
+                    { duration: 1200, fill: "forwards" }
+                );
+            }
+
+        };
+
+        window.addEventListener("mousedown", handleMouseDown);
+        window.addEventListener("mouseup", handleMouseUp);
+        window.addEventListener("mousemove", handleMouseMove);
+
+        return () => {
+            window.removeEventListener("mousedown", handleMouseDown);
+            window.removeEventListener("mouseup", handleMouseUp);
+            window.removeEventListener("mousemove", handleMouseMove);
+        };
+    }, []);
+
     return (
-        <div style={styles.container}>
+        <div ref={trackRef}
+            style={{
+            ...styles.container,
+            WebkitUserSelect: "none",
+            msUserSelect: "none",
+            userSelect: "none",
+        }} id="image-track" data-mouse-down-at="0" data-prev-percentage="0">
             {items.map(item => (
                 <div key={item.id} style={styles.wrapper}>
                     <div style={styles.card}>
-                        <img src={item.imageUrl} alt={item.title} style={styles.image} />
+                        <img className={"image"} src={item.imageUrl} alt={item.title} style={styles.image} draggable={false} />
 
-                        <div style={styles.overlay} className="overlay-content">
+                        <div style={{
+                            ...styles.overlay,
+                            WebkitUserSelect: "none",
+                            msUserSelect: "none",
+                            userSelect: "none",
+                        }} className="overlay-content">
                             <h2 style={styles.title}>{item.title}</h2>
                             <p style={styles.desc}>{item.description}</p>
                         </div>
@@ -30,20 +99,21 @@ const styles = {
     container: {
         display: "flex",
         flexDirection: "column",
-        gap: "40px",
+        gap: "4vmin",
         padding: "40px 20px",
-        maxWidth: "450px",
+        maxWidth: "50vh",
         margin: "0 auto",
         alignItems: "center",
+        transform: "translate(0, 0)"
     },
 
     wrapper: {
         position: "relative",
-        width: "100%",
         borderRadius: "5px",
         overflow: "hidden",
         cursor: "pointer",
         aspectRatio: "3/4",
+        maxWidth: "50vh",
     },
 
     card: {
@@ -56,8 +126,9 @@ const styles = {
     image: {
         width: "100%",
         height: "100%",
+        objectFit: "cover",
+        objectPosition: "center 0",
         display: "block",
-        transition: "transform 0.5s ease",
     },
 
     overlay: {
@@ -73,7 +144,7 @@ const styles = {
         padding: "20px",
         textAlign: "center",
         transition: "opacity 0.4s ease",
-        overflowX: "hidden",
+        pointerEvents: "none"
     },
 
     title: {
@@ -95,17 +166,12 @@ styleTag.innerHTML = `
     .overlay-content:hover {
         opacity: 1 !important;
     }
-    .overlay-content:hover + img,
-    .overlay-content:hover img {
-        transform: scale(1.05);
-    }
-    
-    div:hover > img {
-        transform: scale(1.05);
-    }
     div:hover > .overlay-content {
         opacity: 1;
     }
+    div:hover > img {
+    transform: none !important;
+}
 `;
 document.head.appendChild(styleTag);
 
