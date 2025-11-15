@@ -2,7 +2,7 @@
     max-width: 550px;
     margin: 40px auto;
     padding: 40px;
-    border-radius: 20px;
+    border-radius: 2px;
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -31,7 +31,7 @@
     padding: 14px;
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.18);
-    border-radius: 12px;
+    border-radius: 2px;
     color: white;
     outline: none;
     font-size: 15px;
@@ -41,17 +41,17 @@
 .item-form input:focus,
 .item-form textarea:focus,
 .item-form select:focus {
-    border-color: #a970ff;
+    border-color: #fafbfa;
     background: rgba(255, 255, 255, 0.16);
-    box-shadow: 0 0 10px rgba(169,112,255,0.4);
+    box-shadow: 0 0 10px #6b5b51;
 }
 
 .submit-btn {
     margin-top: 10px;
-    background: linear-gradient(135deg,#8b5cf6,#a855f7);
+    background: #6b5b51;
     color: white;
     padding: 14px;
-    border-radius: 12px;
+    border-radius: 2px;
     cursor: pointer;
     font-size: 16px;
     font-weight: 600;
@@ -60,8 +60,7 @@
 }
 
 .submit-btn:hover {
-    background: linear-gradient(135deg,#7c3aed,#9333ea);
-    transform: translateY(-2px);
+    background: #656257;
 }
 
 .board-select {
@@ -72,19 +71,16 @@
 
 .new-board-btn {
     padding: 10px 12px;
-    background: rgba(169,112,255,0.2);
+    border: none;
+    background: #6b5b51;
     color: white;
-    border-radius: 10px;
-    border: 1px solid rgba(169,112,255,0.4);
+    border-radius: 2px;
     cursor: pointer;
-    transition: 0.2s;
 }
 
 .new-board-btn:hover {
-    background: rgba(169,112,255,0.35);
+    background: #656257FF;
 }
-
-/* --- MODAL --- */
 
 .modal-overlay {
     position: fixed;
@@ -99,7 +95,7 @@
 .modal {
     background: rgba(30,30,30,0.95);
     padding: 30px;
-    border-radius: 16px;
+    border-radius: 2px;
     min-width: 320px;
     color: white;
     box-shadow: 0 0 25px rgba(0,0,0,0.6);
@@ -108,7 +104,7 @@
 .modal input {
     width: 100%;
     padding: 12px;
-    border-radius: 10px;
+    border-radius: 2px;
     border: 1px solid rgba(255,255,255,0.2);
     background: rgba(255,255,255,0.08);
     color: white;
@@ -123,7 +119,7 @@
 
 .modal-actions button {
     padding: 8px 14px;
-    border-radius: 8px;
+    border-radius: 1px;
     cursor: pointer;
     border: none;
     font-weight: 600;
