@@ -1,8 +1,6 @@
-import axios from "axios";
+import api from "./axios";
 
-export const getBoards = () => {
-    return axios.get("http://localhost:8080/api/boards");
-};
-export const createBoard = (board) => {
-    return axios.post("http://localhost:8080/api/boards", board)
-};
+export async function getBoards() {
+    const res = await api.get("/boards");
+    return res.data;
+}
