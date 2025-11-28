@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import {login} from "../api/auth";
-import image from "../../public/login-reg.jpg";
 
 const styles = {
     container: {
@@ -157,7 +156,7 @@ const Login = ({navigate}) => {
                     </div>
                 </form>
             </div>
-            <img style={styles.image} src={image}/>
+            <img style={styles.image} src="/login-reg.jpg" />
         </div>
     )
         ;
