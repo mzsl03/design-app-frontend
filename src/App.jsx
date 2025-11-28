@@ -32,10 +32,10 @@ function App() {
 
     const token = localStorage.getItem("token");
 
-    const unprotectedPaths = ["/login", "/register"];
+    const unprotectedPaths = ["/", "/register"];
 
     if (!token && !unprotectedPaths.includes(currentPath)) {
-        window.location.href = "/login";
+        window.location.href = "/";
         return null;
     }
 
@@ -45,7 +45,7 @@ function App() {
         case "/home":
             Component = [<ItemSlide />, <Crosshair />];
             break;
-        case "/login":
+        case "/":
             Component = <Login navigate={navigate} />;
             break;
         case "/register":
