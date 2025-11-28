@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {register} from "../api/auth";
-import image from "../../public/login-reg.jpg";
 
 const styles = {
     container: {
@@ -90,9 +89,6 @@ const Register = ({navigate}) => {
 
     const [isHovering, setIsHovering] = useState(false);
 
-    handleLogin = async (e) => {
-        navigate("/login");
-    }
 
     useEffect(() => {
         document.body.style.backgroundColor = 'linear-gradient(90deg, white, black)';
@@ -101,12 +97,12 @@ const Register = ({navigate}) => {
         };
     }, []);
 
-    async function handleLogin(e) {
+    async function handleRegister(e) {
         e.preventDefault();
 
         try {
             const result = await register(username, email, password);
-            navigate("/home");
+            navigate("/");
             console.log("REGISTER OK:", result);
         } catch (error) {
             console.error("REGISTER ERROR:", error);
@@ -117,7 +113,7 @@ const Register = ({navigate}) => {
         <div style={styles.container}>
             <div style={styles.formContainer}>
                 <h1 style={styles.heading}>Register</h1>
-                <form onSubmit={handleLogin} style={styles.form}>
+                <form onSubmit={handleRegister} style={styles.form}>
                     <input
                         type="text"
                         placeholder="Username"
@@ -169,7 +165,7 @@ const Register = ({navigate}) => {
                         <span
                             role="button"
                             tabIndex={0}
-                            onClick={handleLogin}
+                            onClick={handleRegister}
                             style={{
                                 color: "white",
                                 cursor: "pointer"
@@ -180,7 +176,7 @@ const Register = ({navigate}) => {
                     </div>
                 </form>
             </div>
-            <img style={styles.image} src={image}/>
+            <img style={styles.image} src="/login-reg.jpg" />
         </div>
     );
 }
