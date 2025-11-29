@@ -43,7 +43,10 @@ function App() {
 
     switch (currentPath) {
         case "/home":
-            Component = [<ItemSlide />, <Crosshair />];
+            Component = [
+                <ItemSlide key="itemSlide" />,
+                <Crosshair key="crosshair" />
+            ];
             break;
         case "/":
             Component = <Login navigate={navigate} />;
