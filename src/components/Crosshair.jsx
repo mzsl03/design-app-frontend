@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 const styles = {
     crosshairContainer: {
@@ -32,7 +32,22 @@ const styles = {
     },
 };
 
-const Crosshair = () => {
+const Crosshair = ({image, onWheel, disabled}) => {
+    useEffect(() => {
+        if (disabled) return;
+        const handleWheel = (e) => {
+            if (!image) {return}
+            if (onWheel && e.deltaY > 0) {
+                onWheel(image);
+            }
+        };
+
+        window.addEventListener("wheel", handleWheel);
+
+        return () => {
+            window.removeEventListener("wheel", handleWheel);
+        };
+    }, [image, onWheel, disabled]);
     return (
         <div
             style={styles.crosshairContainer}

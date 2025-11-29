@@ -1,16 +1,20 @@
 import React, {useEffect, useRef, useState} from "react";
 import {getItems} from "../api/items";
+import Crosshair from "./Crosshair.jsx";
+import DescriptionPanel from "./DescriptionPanel.jsx";
 
 
 const ItemSlide = () => {
 
     const [items, setItems] = useState([]);
-
+    const [centerImage, setCenterImage] = useState(null);
+    const [descImage, setDescImage] = useState(null);
     const trackRef = useRef(null);
 
     useEffect(() => {
         getItems().then(setItems);
     }, []);
+
 
     useEffect(() => {
         const track = trackRef.current;
@@ -20,13 +24,40 @@ const ItemSlide = () => {
             track.dataset.mouseDownAt = e.clientX;
         };
 
+        function updateCenterImage() {
+            const images = track.getElementsByClassName("image");
+            let centerImage = null;
+            let minDistance = Infinity;
+
+            const viewportCenter = window.innerWidth / 2;
+
+            for (const img of images) {
+                const rect = img.getBoundingClientRect();
+                const imgCenter = rect.left + rect.width / 2;
+
+                const distance = Math.abs(imgCenter - viewportCenter);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    centerImage = img;
+                }
+            }
+
+            setCenterImage(centerImage);
+        }
+
         const handleMouseUp = () => {
             track.dataset.mouseDownAt = "0";
             track.dataset.prevPercentage = track.dataset.percentage;
+            updateCenterImage()
         };
 
         const handleMouseMove = (e) => {
             if (track.dataset.mouseDownAt === "0") return;
+
+            const mouseDownAt = parseFloat(track.dataset.mouseDownAt);
+            const prevPercentage = parseFloat(track.dataset.prevPercentage);
+
+            if (isNaN(mouseDownAt) || isNaN(prevPercentage) || mouseDownAt === 0) return;
 
             const mouseDelta = parseFloat(track.dataset.mouseDownAt) - e.clientX;
             const maxDelta = window.innerHeight / 2;
@@ -49,7 +80,6 @@ const ItemSlide = () => {
                     {duration: 1200, fill: "forwards"}
                 );
             }
-
         };
 
         window.addEventListener("mousedown", handleMouseDown);
@@ -64,6 +94,7 @@ const ItemSlide = () => {
     }, []);
 
     return (
+        <>
         <div ref={trackRef}
              style={{
                  ...styles.container,
@@ -71,11 +102,32 @@ const ItemSlide = () => {
                  msUserSelect: "none",
                  userSelect: "none",
              }} id="image-track" data-mouse-down-at="0" data-prev-percentage="0" >
-            {items.map((item, index) => (
-                    <img key={index} className={"image"} src={item.imageUrl} alt={item.title} style={styles.image}
-                         draggable={false}/>
+            {items.map(item => (
+                    <img
+                        key={item.id}
+                        data-id={item.id}
+                        data-username={item.user?.username || ""}
+                        data-tags={item.tags}
+                        className={"image"}
+                        src={item.imageUrl}
+                        alt={item.title}
+                        style={styles.image}
+                        draggable={false}/>
             ))}
         </div>
+            {centerImage && (
+                <Crosshair
+                    image={centerImage}
+                    disabled={descImage}
+                    onWheel={(img) => setDescImage({
+                        src: img.src,
+                        alt: img.alt,
+                        dataset: img.dataset
+                    })}
+                />
+            )}
+            <DescriptionPanel image={descImage} disabled={!descImage} onClose={ () => setDescImage(null)} />
+        </>
     );
 };
 
