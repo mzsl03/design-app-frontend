@@ -1,0 +1,33 @@
+@keyframes fade-in {
+    from {top: 100%;}
+    to {top: 0;}
+}
+
+@keyframes fade-out {
+    from {top: 0;}
+    to {top: 100%;}
+}
+
+.description-panel {
+    background: rgba(0,0,0,0.8);
+    color: white;
+    height: 100vh;
+    width: 100vw;
+    z-index: 3;
+    display: flex;
+    position: absolute;
+}
+
+.fade-in {
+    animation: fade-in 1s forwards;
+}
+
+.fade-out {
+    animation: fade-out 1s forwards;
+}
+
+.description-image {
+    display: block;
+    margin: auto;
+    width: 40%;
+}
