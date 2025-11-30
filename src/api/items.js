@@ -12,3 +12,12 @@ export async function deleteItem(id) {
         }
     });
 }
+
+export async function updateItem(id, dto) {
+    const res = await api.put(`/items/${id}`, dto,{
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+    });
+    return res.data;
+}
