@@ -20,3 +20,12 @@ export async function register(username, email, password) {
     api.defaults.headers.common["Authorization"] = `Bearer ${res.data.token}`;
     return res.data;
 }
+
+
+export function logout() {
+    localStorage.removeItem("token");
+
+    delete api.defaults.headers.common["Authorization"];
+
+    window.dispatchEvent(new Event("storage"));
+}
