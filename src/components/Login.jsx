@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import {login} from "../api/auth";
+import {useNavigate} from "react-router-dom";
 
 const styles = {
     container: {
@@ -82,7 +83,8 @@ const styles = {
     }
 };
 
-const Login = ({navigate}) => {
+const Login = () => {
+    const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
@@ -95,10 +97,8 @@ const Login = ({navigate}) => {
             const result = await login(username, password);
             navigate("/home");
             console.log("LOGIN OK:", result);
-            alert("Login successful!");
         } catch (error) {
             console.error("LOGIN ERROR:", error);
-            alert("Login failed!");
         }
     }
 

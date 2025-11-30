@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {register} from "../api/auth";
+import {useNavigate} from "react-router-dom";
 
 const styles = {
     container: {
@@ -82,7 +83,8 @@ const styles = {
     }
 };
 
-const Register = ({navigate}) => {
+const Register = () => {
+    const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -102,11 +104,15 @@ const Register = ({navigate}) => {
 
         try {
             const result = await register(username, email, password);
-            navigate("/");
+            navigate("/home");
             console.log("REGISTER OK:", result);
         } catch (error) {
             console.error("REGISTER ERROR:", error);
         }
+    }
+
+    const handleLogin = async e => {
+        navigate("/");
     }
 
     return (
@@ -165,7 +171,7 @@ const Register = ({navigate}) => {
                         <span
                             role="button"
                             tabIndex={0}
-                            onClick={handleRegister}
+                            onClick={handleLogin}
                             style={{
                                 color: "white",
                                 cursor: "pointer"
