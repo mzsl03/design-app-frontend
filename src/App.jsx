@@ -1,66 +1,53 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./style.css";
+import {Route, Routes, useNavigate} from "react-router-dom";
+import Login from "./components/Login.jsx";
+import CreateBoardPage from "./components/CreateBoardPage.jsx";
+import Crosshair from "./components/Crosshair.jsx";
+import BoardSlide from "./components/BoardSlide.jsx";
 import ItemSlide from "./components/ItemSlide.jsx";
 import Register from "./components/Register.jsx";
-import Login from "./components/Login.jsx";
-import Crosshair from "./components/Crosshair.jsx";
+import NavBar from "./components/NavBar.jsx";
 
 function App() {
-    const [currentPath, setCurrentPath] = useState(window.location.pathname);
-
-    const navigate = (to) => {
-        if (window.location.pathname !== to) {
-            window.history.pushState({}, "", to);
-            setCurrentPath(to);
-        }
-    };
-
-    useEffect(() => {
-        const handlePopState = () => {
-            setCurrentPath(window.location.pathname);
-        };
-        window.addEventListener('popstate', handlePopState);
-
-        document.body.style.overflow = "hidden";
-
-        return () => {
-            window.removeEventListener('popstate', handlePopState);
-            document.body.style.overflow = "auto";
-        };
-    }, []);
 
     const token = localStorage.getItem("token");
+    const navigate = useNavigate();
 
-    const unprotectedPaths = ["/", "/register"];
+    useEffect(() => {
+        const unprotected = ["/", "/register"];
 
-    if (!token && !unprotectedPaths.includes(currentPath)) {
-        window.location.href = "/";
-        return null;
-    }
-
-    let Component;
-
-    switch (currentPath) {
-        case "/home":
-            Component = [
-                <ItemSlide key="itemSlide" />,
-                <Crosshair key="crosshair" />
-            ];
-            break;
-        case "/":
-            Component = <Login navigate={navigate} />;
-            break;
-        case "/register":
-            Component = <Register navigate={navigate} />;
-            break;
-        default:
-            Component = <h1>404 Not Found</h1>;
-    }
+        if (!token && !unprotected.includes(location.pathname)) {
+            navigate("/", { replace: true });
+        }
+    }, [token, location.pathname, navigate]);
 
     return (
-        <div style={{display: "flex"}}>
-            {Component}
+        <div style={{ display: "flex" }}>
+            {token && <NavBar></NavBar>}
+            <Routes>
+
+                <Route path="/" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+
+
+                {token && (
+                    <>
+                        <Route path="/home" element={<><ItemSlide /><Crosshair /></>} />
+                        <Route path="/board" element={<><BoardSlide /><Crosshair /></>} />
+                        <Route path="/board/create" element={<CreateBoardPage />} />
+                    </>
+                )}
+
+
+                {!token && (
+                    <Route path="*" element={<Login />} />
+                )}
+
+
+                <Route path="*" element={<h1>404 Not Found</h1>} />
+            </Routes>
         </div>
     );
 }
