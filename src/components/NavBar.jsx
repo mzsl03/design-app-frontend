@@ -86,7 +86,7 @@ const Navbar = () => {
                 >
                     Create Board
                 </Link>
-                
+
             </div>
 
             <div style={styles.spacer} />
