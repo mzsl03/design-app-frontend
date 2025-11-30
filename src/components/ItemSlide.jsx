@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
-import {getItems} from "../api/items";
+import {deleteItem, getItems} from "../api/items";
 import Crosshair from "./Crosshair.jsx";
 import DescriptionPanel from "./DescriptionPanel.jsx";
 
@@ -15,6 +15,13 @@ const ItemSlide = () => {
         getItems().then(setItems);
     }, []);
 
+    async function handleDelete(id) {
+        await deleteItem(id);
+
+        setItems(prev => prev.filter(item => item.id !== id));
+
+        setDescImage(null);
+    }
 
     useEffect(() => {
         const track = trackRef.current;
@@ -126,7 +133,11 @@ const ItemSlide = () => {
                     })}
                 />
             )}
-            <DescriptionPanel image={descImage} disabled={!descImage} onClose={ () => setDescImage(null)} />
+            <DescriptionPanel
+                image={descImage}
+                disabled={!descImage}
+                onClose={ () => setDescImage(null)}
+                onDelete={handleDelete} />
         </>
     );
 };
