@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import './css/overlay.css'
 
-export default function DescriptionPanel({ image, onClose, disabled }) {
+export default function DescriptionPanel({ image, onClose, disabled, onDelete }) {
     const [classes, setClasses] = React.useState(`description-panel fade-in`);
 
     useEffect(() => {
@@ -34,6 +34,9 @@ export default function DescriptionPanel({ image, onClose, disabled }) {
             <img src={image.src} alt={image.alt} className="description-image" />
             <p className="description">User: {image.dataset.username}</p>
             <p className="description">Tags: {image.dataset.tags}</p>
+            <button className="delete-btn" onClick={() => onDelete(image.dataset.id)}>
+                Delete
+            </button>
         </div>
     );
 }

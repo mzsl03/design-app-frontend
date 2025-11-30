@@ -16,6 +16,15 @@
     z-index: 3;
     display: flex;
     position: absolute;
+    top: 0;
+    left: 0;
+
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 2rem;
+    box-sizing: border-box;
 }
 
 .fade-in {
@@ -26,8 +35,48 @@
     animation: fade-out 1s forwards;
 }
 
+.card {
+    background-color: rgba(0,0,0,0.6);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    width: 70%;
+    max-width: 900px;
+}
+
+/* Kép */
+.description-image {
+    display: block;
+    margin: 1rem auto;
+    width: 40%;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+/* Szövegek */
+.title-card {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #fff;
+    font-weight: 600;
+}
+
+.description {
+    font-size: 1.2rem;
+    margin: 1rem 0;
+    opacity: 0.9;
+}
+
 .description-image {
     display: block;
     margin: auto;
     width: 40%;
+}
+
+.delete-btn {
+    padding: 1rem 2rem;
+    border-radius: 15px;
+    background: #141414;
+    border: none;
+    color: #fff;
 }
