@@ -2,10 +2,9 @@
     display: grid;
     width: 40vmin;
     height: 56vmin;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 2fr);
+    grid-template-rows: repeat(3, 2fr);
     overflow: hidden;
-    border-radius: 12px;
 }
 
 .board-collage .cell {
@@ -24,12 +23,12 @@
 }
 
 .board-collage:has(.cell:nth-child(2)):not(:has(.cell:nth-child(3))) {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr;
+    grid-template-columns: 2fr;
+    grid-template-rows: 2fr;
 }
 
 .board-collage:has(.cell:nth-child(3)):not(:has(.cell:nth-child(4))) {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 3fr 1fr;
     grid-template-rows: 2fr 1fr;
 }
 
